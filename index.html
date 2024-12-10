@@ -10,32 +10,48 @@
       rel="stylesheet"
     />
 
+    <!-- Fontawesome icons link -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css"
+      integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
     <!-- CSS link -->
     <link rel="stylesheet" href="./assets/css/style.css" />
     <title>Meteo WebApp</title>
   </head>
   <body>
-    <div class="container mt-5">
-      <h1 class="text-center mb-4">Weather Forecast App</h1>
-      <div class="row justify-content-center">
-        <div class="col-md-6">
-          <div class="input-group mb-3">
+    <div class="app-container">
+      <header class="app-header">
+        <h1 class="app-title">Weather Forecast</h1>
+      </header>
+      <main class="app-main">
+        <div class="search-container">
+          <div class="input-wrapper">
             <input
               type="text"
               id="cityInput"
-              class="form-control"
+              class="city-input"
               placeholder="Enter city name"
               aria-label="City name"
-              aria-describedby="search-button"
             />
-            <button class="btn btn-primary" type="button" id="searchButton">
-              Search
+            <button
+              id="clearButton"
+              class="clear-button"
+              aria-label="Clear input"
+            >
+              <i class="fa-solid fa-xmark fa-xl"></i>
             </button>
           </div>
-          <div id="recentSearches" class="mb-3"></div>
+          <button class="search-button" id="searchButton">
+            <i class="fa-solid fa-magnifying-glass fa-xl"></i>
+          </button>
         </div>
-      </div>
-      <div id="weatherInfo" class="mt-4"></div>
+        <div id="weatherInfo" class="weather-info"></div>
+      </main>
     </div>
 
     <!-- Bootstrap JS link -->

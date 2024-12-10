@@ -5,8 +5,46 @@ const OPENWEATHER_API_BASE_URL = 'https://api.openweathermap.org/data/2.5/foreca
 // DOM elements
 const cityInput = document.getElementById('cityInput');
 const searchButton = document.getElementById('searchButton');
+const clearButton = document.getElementById('clearButton');
 const weatherInfo = document.getElementById('weatherInfo');
 const recentSearches = document.getElementById('recentSearches');
+
+// Search button event
+searchButton.addEventListener('click', searchWeather);
+clearButton.addEventListener('click', clearInput);
+cityInput.addEventListener('input', toggleClearButton);
+cityInput.addEventListener('keyup', (event) => {
+  if (event.key === 'Enter') {
+    searchWeather();
+  }
+});
+
+function clearInput() {
+  cityInput.value = '';
+  toggleClearButton();
+  displayInitialCitiesWeather(window.initialCities);
+}
+
+function toggleClearButton() {
+  if (cityInput.value.trim() !== '') {
+    clearButton.style.display = 'block';
+  } else {
+    clearButton.style.display = 'none';
+  }
+}
+
+// Search weather function
+async function searchWeather() {
+  const city = cityInput.value.trim();
+  if (city) {
+    try {
+      const weatherData = await fetchWeatherData(city);
+      displayWeatherData([weatherData]);
+    } catch (error) {
+      weatherInfo.innerHTML = `<p class="text-danger">${error.message}</p>`;
+    }
+  }
+}
 
 // Load cities from JSON file and display their weather
 let cities = [];
@@ -25,7 +63,6 @@ async function displayInitialCitiesWeather() {
   const weatherData = await Promise.all(weatherPromises);
   displayWeatherData(weatherData);
 }
-
 
 // Fetch weather data from API
 async function fetchWeatherData(city) {
