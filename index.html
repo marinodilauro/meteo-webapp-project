@@ -15,6 +15,29 @@
     <title>Meteo WebApp</title>
   </head>
   <body>
+    <div class="container mt-5">
+      <h1 class="text-center mb-4">Weather Forecast App</h1>
+      <div class="row justify-content-center">
+        <div class="col-md-6">
+          <div class="input-group mb-3">
+            <input
+              type="text"
+              id="cityInput"
+              class="form-control"
+              placeholder="Enter city name"
+              aria-label="City name"
+              aria-describedby="search-button"
+            />
+            <button class="btn btn-primary" type="button" id="searchButton">
+              Search
+            </button>
+          </div>
+          <div id="recentSearches" class="mb-3"></div>
+        </div>
+      </div>
+      <div id="weatherInfo" class="mt-4"></div>
+    </div>
+
     <!-- Bootstrap JS link -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
