@@ -19,6 +19,12 @@ cityInput.addEventListener('keyup', (event) => {
   }
 });
 
+function searchCity(city) {
+  cityInput.value = city;
+  searchWeather();
+  toggleClearButton();
+}
+
 function clearInput() {
   cityInput.value = '';
   toggleClearButton();
@@ -40,10 +46,28 @@ async function searchWeather() {
     try {
       const weatherData = await fetchWeatherData(city);
       displayWeatherData([weatherData]);
+      addToRecentSearches(city);
     } catch (error) {
       weatherInfo.innerHTML = `<p class="text-danger">${error.message}</p>`;
     }
   }
+}
+
+// Recent searches functions
+function addToRecentSearches(city) {
+  let searches = JSON.parse(localStorage.getItem('recentSearches')) || [];
+  searches = searches.filter(item => item !== city);
+  searches.unshift(city);
+  searches = searches.slice(0, 5);
+  localStorage.setItem('recentSearches', JSON.stringify(searches));
+  displayRecentSearches();
+}
+
+function displayRecentSearches() {
+  const searches = JSON.parse(localStorage.getItem('recentSearches')) || [];
+  recentSearches.innerHTML = searches.map(city =>
+    `<span class="recent-search" onclick="searchCity('${city}')">${city}</span>`
+  ).join('');
 }
 
 // Load cities from JSON file and display their weather
@@ -122,6 +146,15 @@ function displayWeatherData(weatherDataArray) {
 
   weatherInfo.innerHTML = html;
 }
+
+// Expose necessary functions globally
+window.searchWeather = searchWeather;
+window.fetchWeatherData = fetchWeatherData;
+window.addToRecentSearches = addToRecentSearches;
+window.searchCity = searchCity;
+
+// Initial load
+displayRecentSearches();
 
 
 
